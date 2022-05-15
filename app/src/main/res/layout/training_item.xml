@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_margin="7dp"
+    >
+
+    <TextView
+        android:id="@+id/training_item_word"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?attr/textAppearanceListItem"
+        android:layout_weight="1.1"
+        android:singleLine="true"
+        android:ellipsize="end"
+        />
+
+
+    <EditText
+        android:id="@+id/et_translation_answer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.9"
+        android:inputType="text"
+
+        android:autofillHints="Enter translation"
+        tools:ignore="LabelFor" />
+
+
+
+
+    <ImageButton
+        android:id="@+id/image_btn_check_answer"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.3"
+        android:scaleType="fitCenter"
+        android:background="@drawable/rounded_button"
+        android:src="@drawable/ic__question_answer"
+        android:contentDescription="@string/check_answer"
+        />
+
+
+
+
+</LinearLayout>

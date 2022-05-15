@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_english"
+        android:icon="@mipmap/english_icon"
+        android:title="@string/empty_space"
+        app:showAsAction="ifRoom|withText"/>
+    <item
+        android:id="@+id/action_ukrainian"
+        android:icon="@mipmap/ukrainian_ukrainian"
+        android:title="@string/empty_space"
+        app:showAsAction="ifRoom"/>
+    <item
+    android:icon="@drawable/dropdown_icon"
+    app:showAsAction="ifRoom|withText"
+    android:title="@string/select_list">
+        <menu>
+
+            <item android:id="@+id/all_words"
+                app:showAsAction="ifRoom"
+                app:actionViewClass="android.widget.Spinner"
+                android:title="@string/select_list" />
+        </menu>
+</item>
+</menu>

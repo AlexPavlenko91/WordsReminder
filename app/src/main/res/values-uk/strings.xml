@@ -1,0 +1,96 @@
+<resources>
+    <string name="app_name">WordsReminder</string>
+    <string name="new_word">Нове слово</string>
+    <string name="translation">Переклад</string>
+    <string name="save">ЗБЕРЕГТИ</string>
+    <string name="my_profile_str">Профіль</string>
+    <string name="my_words_str">Список слів</string>
+    <string name="training_str">Тренування</string>
+    <string name="friends_str">Друзі</string>
+    <string name="messages_header">Повідомлення</string>
+    <string name="sync_header">Sync</string>
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="add_button">Додати слово</string>
+    <string name="add_new_word">Додати нове слово</string>
+    <string name="hello_blank_fragment">Привіт бланк фрагмент</string>
+
+    <string name="practice_str">Практика</string>
+    <string name="empty_space" >" "</string>
+    <string name="select_list">Оберіть список</string>
+    <string name="avatar_image">avatar_image</string>
+    <string name="name">"Ім'я"</string>
+    <string name="email">Email</string>
+    <string name="edit_profile_name">edit_profile_name</string>
+    <string name="change">Змінити</string>
+    <string name="check">Перевірити</string>
+    <string name="fab_content_desc">Додати нове слово</string>
+    <string name="delete_text_word">Видалити текст</string>
+    <string name="delete_text_translation">delete text translation</string>
+    <string name="google_translation">google translation</string>
+    <string name="learning_language">Мова яку ви вивчаєте</string>
+    <string name="main_language">Основна мова</string>
+    <string name="select_daily_load">Щоденне навантаження</string>
+    <string name="wrong_answer">Неправильна відповідь</string>
+    <string name="check_answer">Перевірити відповідь</string>
+    <string name="ukrainian">Українська</string>
+    <string name="english">English</string>
+    <string name="english22">English22</string>
+    <string name="fragment_words_list">fragment_words_list</string>
+    <string name="delete">Видалити</string>
+    <string name="save_changes">Зберегти зміни</string>
+    <string name="interface_language">Мова інтерфейсу</string>
+    <string name="select_interface_language">Оберіть мову інтерфейсу</string>
+    <string name="close">закрити</string>
+    <string-array name="daily_load_arr">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+    </string-array>
+    <string-array name="learn_main_lang_arr">
+        <item>English</item>
+        <item>Українська</item>
+    </string-array>
+    <string-array name="interface_lang_arr">
+        <item>English</item>
+        <item>Українська</item>
+    </string-array>
+    <string name="all_words">Всі слова</string>
+    <string name="zero">0</string>
+    <string name="daily_progress">0/3</string>
+    <string name="learned_words">Вивчені слова</string>
+    <string name="being_studied_words">Слова що вивчаються</string>
+    <string name="words_selection">WORDS_SELECTION</string>
+    <string name="select_notification_time">Оберіть час нагадувань</string>
+    <string name="reload">Перезавантажити</string>
+    <string name="show">Показати</string>
+    <string name="enter_answer_hint">Введіть відповідь сюди</string>
+    <string name="hide">Приховати</string>
+    <string name="part_of_speech">Частина мови</string>
+    <string name="definitions">Тлумачення:</string>
+    <string name="meaning">значення</string>
+    <string name="definition">тлумачення</string>
+    <string name="example">приклад</string>
+    <string name="synonym">синонім</string>
+    <string name="antonym">антонім</string>
+    <string name="wrong_toast">Щось пішло не так</string>
+    <string name="examples">Приклади вживання:</string>
+    <string name="synonyms">Синоніми:</string>
+    <string name="antonyms">Антоніми:</string>
+    <string name="add_definition">Додати тлумачення</string>
+    <string name="empty_field_warning">Спочатку введіть значення у поле для вводу</string>
+    <string name="add_example">Додати приклад</string>
+    <string name="add_synonym">Додати синонім</string>
+    <string name="add_antonym">Додати антонім</string>
+    <string name="reload_dictionary">Reload from server</string>
+
+</resources>

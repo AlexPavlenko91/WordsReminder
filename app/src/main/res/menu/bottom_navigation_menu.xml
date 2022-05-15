@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/page1_profile"
+        android:enabled="true"
+        android:icon="@drawable/my_profile_icon"
+        android:title="@string/my_profile_str"/>
+    <item
+        android:id="@+id/page2_word_list"
+        android:enabled="true"
+        android:icon="@drawable/list_icon"
+        android:title="@string/my_words_str"/>
+    <item
+        android:id="@+id/page3_training"
+        android:enabled="true"
+        android:icon="@drawable/training_icon"
+        android:title="@string/training_str"/>
+    <item
+        android:id="@+id/page4_practice"
+        android:enabled="true"
+        android:icon="@drawable/ic_practice"
+        android:title="@string/practice_str"/>
+</menu>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/all_words"
+        android:enabled="true"
+        android:title="@string/all_words"
+        />
+    <item
+        android:id="@+id/being_studied_words"
+        android:enabled="true"
+        android:title="@string/being_studied_words"
+        />
+    <item
+        android:id="@+id/learned_words"
+        android:enabled="true"
+        android:title="@string/learned_words"
+        />
+
+</menu>

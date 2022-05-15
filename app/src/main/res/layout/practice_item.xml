@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_margin="7dp"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="7dp"
+        >
+
+        <TextView
+            android:id="@+id/tv_part_of_speech"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:text="@string/part_of_speech"
+            />
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/switch1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+             />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linear_layout_meaning"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="7dp"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tv_practice_definitions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/definitions"
+            android:textAppearance="?attr/textAppearanceListItem"
+            android:singleLine="false"
+            android:ellipsize="end" />
+        <ListView
+            android:id="@+id/list_view_definitions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="?android:attr/listPreferredItemHeight"
+
+            >
+        </ListView>
+        <Button
+            android:id="@+id/btnAddDefinition"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/add_definition"
+            >
+        </Button>
+
+        <TextView
+            android:id="@+id/tv_practice_examples"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/examples"
+            android:textAppearance="?attr/textAppearanceListItem"
+            android:singleLine="false"
+            android:ellipsize="end" />
+        <ListView
+            android:id="@+id/list_view_examples"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+        </ListView>
+        <Button
+            android:id="@+id/btnAddExample"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/add_example"
+            >
+        </Button>
+        <TextView
+            android:id="@+id/tv_practice_synonyms"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/synonyms"
+            android:textAppearance="?attr/textAppearanceListItem"
+            android:singleLine="false"
+            android:ellipsize="end" />
+        <ListView
+            android:id="@+id/list_view_synonyms"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+        </ListView>
+        <Button
+            android:id="@+id/btnAddSynonym"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/add_synonym"
+            >
+        </Button>
+        <TextView
+            android:id="@+id/tv_practice_antonyms"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/antonyms"
+            android:textAppearance="?attr/textAppearanceListItem"
+            android:singleLine="false"
+            android:ellipsize="end" />
+        <ListView
+            android:id="@+id/list_view_antonyms"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+        </ListView>
+        <Button
+            android:id="@+id/btnAddAntonym"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/add_antonym"
+            >
+        </Button>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/hr_practice"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/lite_transparent_orange" />
+
+</LinearLayout>

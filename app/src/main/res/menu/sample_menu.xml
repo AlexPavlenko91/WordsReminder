@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_training_main_lang"
+        android:icon="@mipmap/ukrainian_ukrainian"
+        android:title="@string/ukrainian"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/action_training_change_lang"
+        android:icon="@drawable/ic_swap_lang"
+        android:title="@string/english"
+        app:showAsAction="ifRoom|withText"/>
+
+    <item
+        android:id="@+id/action_training_learn_lang"
+        android:icon="@mipmap/english_icon"
+        android:title="@string/english"
+        app:showAsAction="ifRoom|withText"/>
+
+</menu>
