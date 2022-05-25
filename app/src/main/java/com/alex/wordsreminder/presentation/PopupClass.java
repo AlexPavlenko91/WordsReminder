@@ -1,9 +1,18 @@
 package com.alex.wordsreminder.presentation;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.speech.RecognitionListener;
+import android.speech.RecognizerIntent;
+import android.speech.SpeechRecognizer;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -24,6 +33,7 @@ import com.alex.wordsreminder.models.WordModel;
 import com.alex.wordsreminder.utils.DbHelper;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class PopupClass {
     protected ImageButton ibtnDelTranslation, ibtnDelWord, ibtnGoogle, ibtnClosePopup;
@@ -35,33 +45,39 @@ public class PopupClass {
     private int position;
     private WordModel wordModel;
     private PopupWindow popupWindow;
-    private Context context;
-    private DbHelper dbHelper;
+    private final Context context;
+    private final DbHelper dbHelper;
+    private SpeechRecognizer speechRecWord, speechRecTranslation;
+    private ImageButton micBtnWord, micBtnTranslation;
+    private static final String TAG = "PopUpRec";
 
     public PopupClass(Context context) {
         this.context = context;
         dbHelper = DbHelper.getInstance(context);
     }
 
+
+    @SuppressLint("ClickableViewAccessibility")
     public void showPopupWindow(final View view, WordsFragment callerFragment) {
+
         this.callerFragment = callerFragment;
         LayoutInflater inflater = (LayoutInflater) view
                 .getContext()
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        viewPopup = inflater.inflate(R.layout.popup_change_word, null);
-
+        viewPopup = inflater.inflate(R.layout.popup_change_word, (ViewGroup) view.getParent(), false);
 
         // create the popup window
         int width = LinearLayout.LayoutParams.WRAP_CONTENT;
         int height = LinearLayout.LayoutParams.WRAP_CONTENT;
         popupWindow = new PopupWindow(viewPopup, width, height, true);
 
-
         popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);// show the popup window
 
         // which view you pass in doesn't matter, it is only used for the window token
         etWord = viewPopup.findViewById(R.id.newWordInput);
         etTranslation = viewPopup.findViewById(R.id.translationInput);
+        micBtnWord = viewPopup.findViewById(R.id.ib_mic_word);
+        micBtnTranslation = viewPopup.findViewById(R.id.ib_mic_translation);
         btnSave = viewPopup.findViewById(R.id.buttonSave);
         ibtnDelWord = viewPopup.findViewById(R.id.imageButtonDelWord);
         ibtnDelTranslation = viewPopup.findViewById(R.id.imageButtonDelTranslation);
@@ -82,7 +98,50 @@ public class PopupClass {
             popupWindow.dismiss();
         });
         ibtnClosePopup.setOnClickListener(v -> popupWindow.dismiss());
-        // dismiss the popup window when touched
+
+        speechRecWord = SpeechRecognizer.createSpeechRecognizer(context);
+        speechRecTranslation = SpeechRecognizer.createSpeechRecognizer(context);
+
+        final Intent speechRecognizerIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
+
+        speechRecWord.setRecognitionListener(new MySpeechListener(etWord));
+        micBtnWord.setOnTouchListener((v, event) -> {
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    micBtnWord.setImageResource(R.drawable.ic_mic_red);
+                    speechRecWord.startListening(speechRecognizerIntent);
+                    break;
+                case MotionEvent.ACTION_UP:
+                    micBtnWord.setImageResource(R.drawable.ic_mic_black_off);
+                    speechRecWord.stopListening();
+                    v.performClick();
+                    break;
+                default:
+                    break;
+            }
+            return true;
+        });
+
+        speechRecTranslation.setRecognitionListener(new MySpeechListener(etTranslation));
+        micBtnTranslation.setOnTouchListener((v, event) -> {
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    micBtnTranslation.setImageResource(R.drawable.ic_mic_red);
+                    speechRecTranslation.startListening(speechRecognizerIntent);
+                    break;
+                case MotionEvent.ACTION_UP:
+                    micBtnTranslation.setImageResource(R.drawable.ic_mic_black_off);
+                    speechRecTranslation.stopListening();
+                    v.performClick();
+                    break;
+                default:
+                    break;
+            }
+            return true;
+        });
+
 
     }
 
@@ -183,7 +242,7 @@ public class PopupClass {
         LayoutInflater inflater = (LayoutInflater) view
                 .getContext()
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        viewPopup = inflater.inflate(R.layout.popup_change_meaning, null);
+        viewPopup = inflater.inflate(R.layout.popup_change_word, (ViewGroup) view.getParent(), false);
         int width = LinearLayout.LayoutParams.WRAP_CONTENT;
         int height = LinearLayout.LayoutParams.WRAP_CONTENT;
         popupWindow = new PopupWindow(viewPopup, width, height, true);
@@ -262,7 +321,7 @@ public class PopupClass {
         LayoutInflater inflater = (LayoutInflater) view
                 .getContext()
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        viewPopup = inflater.inflate(R.layout.popup_change_meaning, null);
+        viewPopup = inflater.inflate(R.layout.popup_change_word, (ViewGroup) view.getParent(), false);
         int width = LinearLayout.LayoutParams.WRAP_CONTENT;
         int height = LinearLayout.LayoutParams.WRAP_CONTENT;
         popupWindow = new PopupWindow(viewPopup, width, height, true);
@@ -313,5 +372,64 @@ public class PopupClass {
             } else
                 Toast.makeText(context, R.string.empty_field_warning, Toast.LENGTH_SHORT).show();
         });
+    }
+
+    static class MySpeechListener implements RecognitionListener {
+
+        EditText editText;
+
+        public MySpeechListener(EditText editText) {
+            this.editText = editText;
+        }
+
+        @Override
+        public void onReadyForSpeech(Bundle bundle) {
+            Log.d(TAG, "onReadyForSpeech");
+        }
+
+        @Override
+        public void onBeginningOfSpeech() {
+            editText.setText("");
+            editText.setHint("Listening...");
+            Log.d(TAG, "onBeginningOfSpeech");
+        }
+
+        @Override
+        public void onRmsChanged(float v) {
+            Log.d(TAG, "onRmsChanged");
+        }
+
+        @Override
+        public void onBufferReceived(byte[] bytes) {
+            Log.d(TAG, "onBufferReceived");
+        }
+
+        @Override
+        public void onEndOfSpeech() {
+            Log.d(TAG, "onEndOfSpeech");
+        }
+
+        @Override
+        public void onError(int i) {
+            Log.d(TAG,  "error " +  i);
+            editText.setText(R.string.try_again);
+        }
+
+        @Override
+        public void onResults(Bundle bundle) {
+            ArrayList<String> data = bundle.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
+            editText.setText(data.get(0));
+            editText.setHint(R.string.translation);
+        }
+
+        @Override
+        public void onPartialResults(Bundle bundle) {
+
+        }
+
+        @Override
+        public void onEvent(int i, Bundle bundle) {
+
+        }
     }
 }

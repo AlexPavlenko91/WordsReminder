@@ -3,7 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Andriod/Projects/WordsReminder/app/src/main/res/drawable/ic_mic_red.xml" value="0.186" />
+        <entry key="..\:/Andriod/Projects/WordsReminder/app/src/main/res/drawable/ic_microphone_342.xml" value="0.16" />
         <entry key="..\:/Andriod/Projects/WordsReminder/app/src/main/res/drawable/shape.xml" value="0.186" />
+        <entry key="..\:/Andriod/Projects/WordsReminder/app/src/main/res/layout/popup_change_word.xml" value="0.2" />
         <entry key="..\:/Andriod/Projects/WordsReminder/app/src/main/res/xml/root_preferences.xml" value="0.11302083333333333" />
       </map>
     </option>

@@ -92,5 +92,9 @@
     <string name="add_synonym">Додати синонім</string>
     <string name="add_antonym">Додати антонім</string>
     <string name="reload_dictionary">Reload from server</string>
+    <string name="channel_name">channel01</string>
+    <string name="channel_description">channel_description01</string>
+    <string name="say_new_word">Надиктуйте нове слово</string>
+    <string name="try_again">Спробуйте знову</string>
 
 </resources>
