@@ -1,0 +1,40 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:width="256dp"
+    android:height="256dp"
+    android:viewportWidth="256"
+    android:viewportHeight="256"
+    tools:ignore="VectorRaster">
+  <path
+      android:pathData="M128,200.73c-44.85,0 -81.34,-36.49 -81.34,-81.34c0,-4.79 3.89,-8.68 8.68,-8.68c4.79,0 8.68,3.89 8.68,8.68C64.02,154.67 92.72,183.37 128,183.37c35.28,0 63.98,-28.7 63.98,-63.98c0,-4.79 3.88,-8.68 8.68,-8.68s8.68,3.89 8.68,8.68C209.34,164.24 172.85,200.73 128,200.73z"
+      android:strokeLineJoin="miter"
+      android:strokeWidth="2.8"
+      android:fillColor="#000000"
+      android:fillType="nonZero"
+      android:strokeColor="#00000000"
+      android:strokeLineCap="butt"/>
+  <path
+      android:pathData="M128,172.08L128,172.08c-28.81,0 -52.37,-23.57 -52.37,-52.37L75.63,54.34C75.63,25.53 99.19,1.96 128,1.96l0,0c28.81,0 52.37,23.57 52.37,52.37l0,65.36C180.37,148.51 156.81,172.08 128,172.08z"
+      android:strokeLineJoin="miter"
+      android:strokeWidth="2.8"
+      android:fillColor="#000000"
+      android:fillType="nonZero"
+      android:strokeColor="#00000000"
+      android:strokeLineCap="butt"/>
+  <path
+      android:pathData="M128,251.83c-4.79,0 -8.68,-3.88 -8.68,-8.68L119.32,194.25c0,-4.79 3.89,-8.68 8.68,-8.68c4.79,0 8.68,3.88 8.68,8.68l0,48.9C136.68,247.95 132.79,251.83 128,251.83z"
+      android:strokeLineJoin="miter"
+      android:strokeWidth="2.8"
+      android:fillColor="#000000"
+      android:fillType="nonZero"
+      android:strokeColor="#00000000"
+      android:strokeLineCap="butt"/>
+  <path
+      android:pathData="M157.27,254.04L98.73,254.04c-4.79,0 -8.68,-3.88 -8.68,-8.68s3.89,-8.68 8.68,-8.68l58.54,0c4.79,0 8.68,3.88 8.68,8.68S162.07,254.04 157.27,254.04z"
+      android:strokeLineJoin="miter"
+      android:strokeWidth="2.8"
+      android:fillColor="#000000"
+      android:fillType="nonZero"
+      android:strokeColor="#00000000"
+      android:strokeLineCap="butt"/>
+</vector>

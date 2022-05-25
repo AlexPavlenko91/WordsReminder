@@ -75,6 +75,10 @@
     <string name="add_synonym">Add synonym</string>
     <string name="add_antonym">Add antonym</string>
     <string name="reload_dictionary">Reload from server</string>
+    <string name="channel_name">channel01</string>
+    <string name="channel_description">channel_description01</string>
+    <string name="say_new_word">Say the new word</string>
+    <string name="try_again">Try again</string>
     <string-array name="daily_load_arr">
         <item>1</item>
         <item>2</item>
