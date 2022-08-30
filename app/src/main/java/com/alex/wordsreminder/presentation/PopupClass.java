@@ -242,7 +242,7 @@ public class PopupClass {
         LayoutInflater inflater = (LayoutInflater) view
                 .getContext()
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        viewPopup = inflater.inflate(R.layout.popup_change_word, (ViewGroup) view.getParent(), false);
+        viewPopup = inflater.inflate(R.layout.popup_change_meaning, (ViewGroup) view.getParent(), false);
         int width = LinearLayout.LayoutParams.WRAP_CONTENT;
         int height = LinearLayout.LayoutParams.WRAP_CONTENT;
         popupWindow = new PopupWindow(viewPopup, width, height, true);
@@ -321,7 +321,7 @@ public class PopupClass {
         LayoutInflater inflater = (LayoutInflater) view
                 .getContext()
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        viewPopup = inflater.inflate(R.layout.popup_change_word, (ViewGroup) view.getParent(), false);
+        viewPopup = inflater.inflate(R.layout.popup_change_meaning, (ViewGroup) view.getParent(), false);
         int width = LinearLayout.LayoutParams.WRAP_CONTENT;
         int height = LinearLayout.LayoutParams.WRAP_CONTENT;
         popupWindow = new PopupWindow(viewPopup, width, height, true);
