@@ -1,6 +1,8 @@
 package com.alex.wordsreminder.services;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.os.Build;
 import android.text.format.DateUtils;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -26,8 +28,8 @@ import java.util.stream.Collectors;
 public class AnswerDataService {
 
     private UserModel currentUser;
-    private Context context;
-    private DbHelper dbHelper;
+    private final Context context;
+    private final DbHelper dbHelper;
 
     public AnswerDataService(Context context) {
         this.context = context;
@@ -185,6 +187,9 @@ public class AnswerDataService {
         int activeDays = countActiveDays(answers);
 
         progressBarDailyGoal.setProgress(dailyProgress);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            progressBarDailyGoal.setOutlineAmbientShadowColor(Color.parseColor("#bdbdbd"));
+        }
         String tvDailyProgText = rightAns + "/" + dailyLoad;
         tvDailyProgress.setText(tvDailyProgText);
         tvActiveDays.setText(String.valueOf(activeDays));
