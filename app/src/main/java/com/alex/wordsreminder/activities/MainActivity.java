@@ -8,7 +8,6 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.speech.RecognitionListener;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -16,6 +15,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -45,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
     private final TrainingFragment trainingFragment = new TrainingFragment();
     private final PracticeFragment practiceFragment = new PracticeFragment();
     private UserModel currentUser = UserModel.newInstance();
-    private ArrayList<WordModel> words;
     private BottomNavigationView bottomNavigationView;
 
     @SuppressLint("NonConstantResourceId")
@@ -58,18 +57,13 @@ public class MainActivity extends AppCompatActivity {
             checkPermission();
         }
 
-    /*    speechRecognizer = SpeechRecognizer.createSpeechRecognizer(this);
-        final Intent speechRecognizerIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-        speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-        speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());*/
-
         setContentView(R.layout.activity_main);
         Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
         ArrayList<UserModel> users = DbHelper.getInstance(this).getAllUsers();
         ArrayList<AnswerModel> answers = DbHelper.getInstance(this).getAllAnswers();
-        words = DbHelper.getInstance(this).getAllWords();
+        ArrayList<WordModel> words = DbHelper.getInstance(this).getAllWords();
         WordDataService wordDataService = new WordDataService();
         if (!users.isEmpty()) {
             currentUser = users.get(users.size() - 1);
