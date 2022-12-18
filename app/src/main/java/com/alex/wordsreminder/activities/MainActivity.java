@@ -31,7 +31,6 @@ import com.alex.wordsreminder.models.AnswerModel;
 import com.alex.wordsreminder.models.UserModel;
 import com.alex.wordsreminder.models.WordModel;
 import com.alex.wordsreminder.services.AnswerDataService;
-import com.alex.wordsreminder.services.WordDataService;
 import com.alex.wordsreminder.utils.DbHelper;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -72,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
         TextView tvDailyProgress = findViewById(R.id.tv_daily_goal);
         TextView tvActiveDays = findViewById(R.id.tv_active_days);
 
-        int rightAns = AnswerDataService.countRightAnswers(answers);
+        int rightAns = AnswerDataService.rightAnsForToday(answers);
         String activeDays = String.valueOf(AnswerDataService.countActiveDays(answers));
 
         tvActiveDays.setText(activeDays);
