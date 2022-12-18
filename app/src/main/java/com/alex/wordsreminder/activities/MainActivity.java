@@ -52,19 +52,18 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(
+                this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
             checkPermission();
         }
 
         setContentView(R.layout.activity_main);
         Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
-
-        ArrayList<UserModel> users = DbHelper.getInstance(this).getAllUsers();
-        ArrayList<AnswerModel> answers = DbHelper.getInstance(this).getAllAnswers();
-        ArrayList<WordModel> words = DbHelper.getInstance(this).getAllWords();
-        WordDataService wordDataService = new WordDataService();
+        DbHelper dbHelper = DbHelper.getInstance(this);
+        ArrayList<UserModel> users = dbHelper.getAllUsers();
+        ArrayList<AnswerModel> answers = dbHelper.getAllAnswers();
+        ArrayList<WordModel> words = dbHelper.getAllWords();
         if (!users.isEmpty()) {
             currentUser = users.get(users.size() - 1);
             setLocale(currentUser.getInterfaceLanguage());
