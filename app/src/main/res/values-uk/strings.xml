@@ -96,5 +96,9 @@
     <string name="channel_description">channel_description01</string>
     <string name="say_new_word">Надиктуйте нове слово</string>
     <string name="try_again">Спробуйте знову</string>
+    <string name="wait_message">Зачекайте...</string>
+    <string name="input">Ваш ввід: %1$s</string>
+    <string name="language_id_error">Невдалося ідентифікувати мову</string>
+    <string name="language">Ідентифікована мова(s): %1$s</string>
 
 </resources>

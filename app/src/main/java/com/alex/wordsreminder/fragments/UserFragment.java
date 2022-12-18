@@ -338,7 +338,7 @@ public class UserFragment extends Fragment {
 
     public void updateAppBar() {
         answers = DbHelper.getInstance(getContext()).getAllAnswers();
-        int rightAns = AnswerDataService.countRightAnswers(answers);
+        int rightAns = AnswerDataService.rightAnsForToday(answers);
         int dailyLoad = currentUser.getDaily_load();
         int dailyProgress = (int) (((float) rightAns / (float) dailyLoad) * 100);
 

@@ -40,7 +40,7 @@ public class AnswerDataService {
         }
     }
 
-    public static int countRightAnswers(ArrayList<AnswerModel> answers) {
+    public static int rightAnsForToday(ArrayList<AnswerModel> answers) {
         int counter = 0;
         for (AnswerModel ans : answers) {
             Date d1 = ans.getDateTime();
@@ -65,28 +65,7 @@ public class AnswerDataService {
                 dates.add(ansDate1);
             }
         }
-        /*for (int i = 0; i < answers.size(); i++) {
-            AnswerModel ans = answers.get(i);
-            if (ans.getIsRight().equals("1")) {
-                LocalDate ansDate1 = ans.getDateTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                dates.add(ansDate1);
-               */
-        /* if (i < answers.size() - 1 && i > 0) {
-                    AnswerModel ansOlder = answers.get(i + 1);
-                    LocalDate ansDateOlder = ansOlder.getDateTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                    if (ansDateOlder.isBefore(ansDate1) && ansOlder.getIsRight().equals("1")) {
-                        dif = (int) ChronoUnit.DAYS.between(ansDateOlder, ansDate1);
-                        if (dif == 1) {
-                            counter++;
-                        } else break;
-                    }
-                } else {
-                    if (ansDate1.isEqual(currentDate)) {
-                        counter++;
-                    }
-                }*//*
-            }
-        }*/
+
         dates = (ArrayList<LocalDate>) dates.stream().distinct().collect(Collectors.toList());
         for (int i = 0; i < dates.size(); i++) {
             LocalDate date = dates.get(i);
@@ -181,7 +160,7 @@ public class AnswerDataService {
     public void updateProgress(TextView tvDailyProgress, TextView tvActiveDays,
                                ProgressBar progressBarDailyGoal) {
         ArrayList<AnswerModel> answers = dbHelper.getAllAnswers();
-        int rightAns = countRightAnswers(answers);
+        int rightAns = rightAnsForToday(answers);
         int dailyLoad = currentUser.getDaily_load();
         int dailyProgress = (int) (((float) rightAns / (float) dailyLoad * 100));
         int activeDays = countActiveDays(answers);
