@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="40dp"
@@ -26,6 +27,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.3" />
+
 
     <EditText
         android:id="@+id/newWordInput"
@@ -77,6 +79,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/save"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/translationInput" />
@@ -118,11 +121,12 @@
         android:background="@color/colorTransparent"
         android:contentDescription="@string/google_translation"
         android:scaleType="fitCenter"
+        android:src="@drawable/ic_google_translate_logo"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.09"
         app:layout_constraintStart_toEndOf="@+id/buttonSave"
-        app:layout_constraintTop_toBottomOf="@+id/imageButtonDelTranslation"
-        android:src="@drawable/ic_google_translate_logo" />
+        app:layout_constraintTop_toBottomOf="@+id/imageButtonDelTranslation" />
 
     <ImageButton
         android:id="@+id/btn_close_popup"
@@ -145,5 +149,24 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_text_output"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_del_word" />
+
+    <TextView
+        android:id="@+id/tv_last_input"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/newWordInput"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

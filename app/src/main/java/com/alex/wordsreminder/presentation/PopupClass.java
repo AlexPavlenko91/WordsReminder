@@ -3,6 +3,7 @@ package com.alex.wordsreminder.presentation;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
@@ -19,6 +20,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alex.wordsreminder.R;
@@ -31,6 +33,8 @@ import com.alex.wordsreminder.models.ExampleModel;
 import com.alex.wordsreminder.models.SynonymModel;
 import com.alex.wordsreminder.models.WordModel;
 import com.alex.wordsreminder.utils.DbHelper;
+import com.google.mlkit.nl.languageid.LanguageIdentification;
+import com.google.mlkit.nl.languageid.LanguageIdentifier;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -40,6 +44,7 @@ public class PopupClass {
     protected Button btnSave, btnDelete;
     protected View viewPopup;
     protected EditText etWord, etTranslation;
+
     private WordsFragment callerFragment = null;
     private String idWord = "-1";
     private int position;
@@ -50,6 +55,7 @@ public class PopupClass {
     private SpeechRecognizer speechRecWord, speechRecTranslation;
     private ImageButton micBtnWord, micBtnTranslation;
     private static final String TAG = "PopUpRec";
+    TextView language, input;
 
     public PopupClass(Context context) {
         this.context = context;
@@ -66,9 +72,10 @@ public class PopupClass {
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         viewPopup = inflater.inflate(R.layout.popup_change_word, (ViewGroup) view.getParent(), false);
 
+
         // create the popup window
-        int width = LinearLayout.LayoutParams.WRAP_CONTENT;
-        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+            int width = Resources.getSystem().getDisplayMetrics().widthPixels - 64;
+        int height = (int)(Resources.getSystem().getDisplayMetrics().heightPixels /2);
         popupWindow = new PopupWindow(viewPopup, width, height, true);
 
         popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);// show the popup window
@@ -84,6 +91,8 @@ public class PopupClass {
         ibtnClosePopup = viewPopup.findViewById(R.id.btn_close_popup);
         ibtnGoogle = viewPopup.findViewById(R.id.imageButtonGoogleTranslator);
         btnDelete = viewPopup.findViewById(R.id.btn_del_word);
+        language = viewPopup.findViewById(R.id.tv_text_output);
+        input = viewPopup.findViewById(R.id.tv_last_input);
         btnDelete.setVisibility(View.INVISIBLE);
         btnSave.setOnClickListener(v -> {
             onSavePopUpClick(v);
@@ -234,9 +243,39 @@ public class PopupClass {
 
 
     public void onButtonTranslateClick(View view) {
-        Toast.makeText(view.getContext(), "This function is not available yet", Toast.LENGTH_SHORT).show();
+
+        identifyLanguage( etWord.getText().toString().trim());
+        //Toast.makeText(view.getContext(), "This function is not available yet", Toast.LENGTH_SHORT).show();
     }
 
+    private void identifyLanguage(final String inputText) {
+
+        LanguageIdentifier languageIdentifier = LanguageIdentification.getClient();
+        language.setText(R.string.wait_message);
+
+        languageIdentifier
+                .identifyLanguage(inputText)
+                .addOnSuccessListener(
+                        identifiedLanguage -> {
+                            input.setText(context.getString(R.string.input, inputText));
+                            language.setText(context.getString(R.string.language, identifiedLanguage));
+                        })
+                .addOnFailureListener(
+                        e -> {
+                            Log.e(TAG, "Language identification error", e);
+                            input.setText(context.getString(R.string.input, inputText));
+                            language.setText("");
+                            Toast.makeText(
+                                            context,
+                                            context.getString(R.string.language_id_error)
+                                                    + "\nError: "
+                                                    + e.getLocalizedMessage()
+                                                    + "\nCause: "
+                                                    + e.getCause(),
+                                            Toast.LENGTH_LONG)
+                                    .show();
+                        });
+    }
     public void changeMeaningPart(PracticeAdapter.MeaningPartAdapter adapter, ListView listView, ArrayList<BaseMeaning> list, int id,
                                   View view, String meaningPart) {
         LayoutInflater inflater = (LayoutInflater) view
@@ -412,7 +451,7 @@ public class PopupClass {
         @Override
         public void onError(int i) {
             Log.d(TAG,  "error " +  i);
-            editText.setText(R.string.try_again);
+            Toast.makeText(editText.getContext(), R.string.try_again, Toast.LENGTH_SHORT).show();
         }
 
         @Override
