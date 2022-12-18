@@ -27,7 +27,7 @@ import java.util.Locale;
 public class DbHelper extends SQLiteOpenHelper {
 
     public static final int SCHEMA = 1;
-    public static final String DATABASE_NAME = "wordsDb002";
+    public static final String DATABASE_NAME = "wordsDb001";
     public static final String TBL_WORDS = "words";
     public static final String TBL2_USERS = "users";
     public static final String TBL3_ANSWERS = "answers";
@@ -48,7 +48,6 @@ public class DbHelper extends SQLiteOpenHelper {
     public static final String COLUMN2_LEARNING_LANGUAGE = "learning_language";
     public static final String COLUMN2_DAILY_LOAD = "daily_load";
     public static final String COLUMN2_DATE_CREATED = "date_created";
-    public static final String COLUMN2_IS_CURRENT = "is_current";
     public static final String COLUMN2_NOTIFICATIONS_TIME = "notifications_time";
     public static final String COLUMN3_USER_ID = "_user_id";
     public static final String COLUMN3_WORD_ID = "_word_id";
@@ -105,7 +104,6 @@ public class DbHelper extends SQLiteOpenHelper {
                     COLUMN2_LEARNING_LANGUAGE + " text, " +
                     COLUMN2_DAILY_LOAD + " integer, " +
                     COLUMN2_DATE_CREATED + " text, " +
-                    COLUMN2_IS_CURRENT + " integer, " +
                     COLUMN2_NOTIFICATIONS_TIME + " text " +
 
                     " )");
@@ -212,19 +210,6 @@ public class DbHelper extends SQLiteOpenHelper {
         return result != -1;
     }
 
-    public boolean updateMeaning(MeaningModel meaningModel) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(COLUMN4_WORD_ID, meaningModel.getWordId());
-        contentValues.put(COLUMN4_PART_OF_SPEECH, meaningModel.getPartOfSpeech());
-        contentValues.put(TBL5_DEFINITIONS, meaningModel.getDefinitions().toString());
-      /*  contentValues.put(TBL_EXAMPLES, meaningModel.getExamples().toString());
-        contentValues.put(TBL_SYNONYMS, meaningModel.getSynonyms().toString());
-        contentValues.put(TBL_ANTONYMS, meaningModel.getAntonyms().toString());*/
-        long result = db.update(TBL4_MEANINGS, contentValues, "_id = ?",
-                new String[]{meaningModel.getId()});
-        return result != -1;
-    }
 
     public boolean updateDefinition(DefinitionModel definitionModel) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -248,7 +233,6 @@ public class DbHelper extends SQLiteOpenHelper {
         contentValues.put(COLUMN2_LEARNING_LANGUAGE, userModel.getLearning_language());
         contentValues.put(COLUMN2_DAILY_LOAD, userModel.getDaily_load());
         contentValues.put(COLUMN2_DATE_CREATED, userModel.getDateCreated());
-        contentValues.put(COLUMN2_IS_CURRENT, 1);
         contentValues.put(COLUMN2_NOTIFICATIONS_TIME, userModel.getNotificationsTime());
 
         long result = db.insert(TBL2_USERS, null, contentValues);
@@ -285,7 +269,6 @@ public class DbHelper extends SQLiteOpenHelper {
         contentValues.put(COLUMN2_LEARNING_LANGUAGE, user.getLearning_language());
         contentValues.put(COLUMN2_DAILY_LOAD, user.getDaily_load());
         contentValues.put(COLUMN2_DATE_CREATED, user.getDateCreated());
-        contentValues.put(COLUMN2_IS_CURRENT, user.getIs_current());
         contentValues.put(COLUMN2_NOTIFICATIONS_TIME, user.getNotificationsTime());
         long result = db.update(TBL2_USERS, contentValues, "_id = ?", new String[]{user.getId()});
         return result != -1;
@@ -332,7 +315,6 @@ public class DbHelper extends SQLiteOpenHelper {
                         cursor.getString(cursor.getColumnIndex(COLUMN2_LEARNING_LANGUAGE)),
                         Integer.parseInt(cursor.getString(cursor.getColumnIndex(COLUMN2_DAILY_LOAD))),
                         cursor.getString(cursor.getColumnIndex(COLUMN2_DATE_CREATED)),
-                        cursor.getString(cursor.getColumnIndex(COLUMN2_IS_CURRENT)),
                         cursor.getString(cursor.getColumnIndex(COLUMN2_NOTIFICATIONS_TIME))
                 );
                 // Adding user record to list
