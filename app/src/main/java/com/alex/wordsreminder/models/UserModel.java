@@ -12,7 +12,6 @@ public class UserModel{
     private String learning_language;
     private int daily_load;
     private String dateCreated;
-    private String is_current;
     private static UserModel mInstance = null;
 
 
@@ -30,7 +29,6 @@ public class UserModel{
                      String learning_language,
                      int daily_load,
                      String dateCreated,
-                     String is_current,
                      String notificationsTime) {
         this.id = id;
         this.user_name = user_name;
@@ -40,7 +38,6 @@ public class UserModel{
         this.learning_language = learning_language;
         this.daily_load = daily_load;
         this.dateCreated = dateCreated;
-        this.is_current = is_current;
         this.notificationsTime = notificationsTime;
     }
 
@@ -55,7 +52,6 @@ public class UserModel{
                     "en",
                     3,
                     String.valueOf(new Date()),
-                    "1",
                     "OFF");
         }
         return mInstance;
@@ -124,15 +120,6 @@ public class UserModel{
     public void setDaily_load(int daily_load) {
         this.daily_load = daily_load;
     }
-
-    public String getIs_current() {
-        return is_current;
-    }
-
-    public void setIs_current(String is_current) {
-        this.is_current = is_current;
-    }
-
 
     public int getIntId() {
         return Integer.parseInt(id);
