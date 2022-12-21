@@ -46,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
     private UserModel currentUser = UserModel.newInstance();
     private BottomNavigationView bottomNavigationView;
 
-    @SuppressLint("NonConstantResourceId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,7 +75,6 @@ public class MainActivity extends AppCompatActivity {
 
         tvActiveDays.setText(activeDays);
 
-
         float dailyLoad = (float) currentUser.getDaily_load();
         int dailyProgress = (int) (((float) rightAns / dailyLoad) * 100);
 
@@ -97,24 +95,18 @@ public class MainActivity extends AppCompatActivity {
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnItemSelectedListener(item -> {
-
-            switch (item.getItemId()) {
-                case R.id.page1_profile:
-                    getSupportFragmentManager().beginTransaction().replace
-                            (R.id.fragment_container_view, userFragment).commit();
-                    break;
-                case R.id.page2_word_list:
-                    getSupportFragmentManager().beginTransaction().
-                            replace(R.id.fragment_container_view, wordListFragment).commit();
-                    break;
-                case R.id.page3_training:
-                    getSupportFragmentManager().beginTransaction().
-                            replace(R.id.fragment_container_view, trainingFragment).commit();
-                    break;
-                case R.id.page4_practice:
-                    getSupportFragmentManager().beginTransaction().
-                            replace(R.id.fragment_container_view, practiceFragment).commit();
-                    break;
+            if (item.getItemId()==R.id.page1_profile){
+                getSupportFragmentManager().beginTransaction().replace
+                        (R.id.fragment_container_view, userFragment).commit();
+            } else if (item.getItemId()==R.id.page2_word_list){
+                getSupportFragmentManager().beginTransaction().replace
+                        (R.id.fragment_container_view, wordListFragment).commit();
+            } else if (item.getItemId()==R.id.page3_training){
+                getSupportFragmentManager().beginTransaction().replace
+                        (R.id.fragment_container_view, trainingFragment).commit();
+            } else if (item.getItemId()==R.id.page4_practice){
+                getSupportFragmentManager().beginTransaction().replace
+                        (R.id.fragment_container_view, practiceFragment).commit();
             }
             return true;
         });
@@ -124,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @SuppressLint({"ClickableViewAccessibility", "InflateParams"})
-    public void onButtonShowPopupWindowClick(View view) {
+    public void onAddNewWordClick(View view) {
         if (wordListFragment != null) {
             wordListFragment.onAddNewWordClick(view);
             getSupportFragmentManager().beginTransaction().
@@ -171,10 +163,7 @@ public class MainActivity extends AppCompatActivity {
                 updateFragment();
                 return true;
             default:
-                // If we got here, the user's action was not recognized.
-                // Invoke the superclass to handle it.
                 return super.onOptionsItemSelected(item);
-
         }
     }
 
@@ -193,6 +182,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @SuppressWarnings("deprecation")
     public void setLocale(String langInterface) {
         String languageCode = "en";
         switch (langInterface) {
@@ -210,6 +200,4 @@ public class MainActivity extends AppCompatActivity {
         config.setLocale(locale);
         resources.updateConfiguration(config, resources.getDisplayMetrics());
     }
-
-
 }

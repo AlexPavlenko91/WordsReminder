@@ -100,5 +100,7 @@
     <string name="input">Ваш ввід: %1$s</string>
     <string name="language_id_error">Невдалося ідентифікувати мову</string>
     <string name="language">Ідентифікована мова(s): %1$s</string>
+    <string name="unknown_error">unknown error</string>
+    <string name="translate_progress">Translating..</string>
 
 </resources>
