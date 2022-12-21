@@ -22,7 +22,6 @@ public class WordAdapter extends RecyclerView.Adapter<WordAdapter.ViewHolder> {
     private final LayoutInflater inflater;
     private final ArrayList<WordModel> words;
 
-
     public WordAdapter(Context context, ArrayList<WordModel> words, OnWordClickListener onClickListener) {
         this.onClickListener = onClickListener;
         this.words = words;
@@ -44,9 +43,7 @@ public class WordAdapter extends RecyclerView.Adapter<WordAdapter.ViewHolder> {
         holder.wordView.setText(word.getWord());
         holder.translationView.setText(word.getTranslation());
         int mProgressStatus = word.getRightAnswers() * 20;
-
         holder.itemView.setOnClickListener(v -> onClickListener.onWordClick(word, position));
-
         holder.progressBar.setProgress(mProgressStatus);
     }
 
@@ -85,6 +82,4 @@ public class WordAdapter extends RecyclerView.Adapter<WordAdapter.ViewHolder> {
             progressBar = view.findViewById(R.id.progress_bar_word);
         }
     }
-
-
 }

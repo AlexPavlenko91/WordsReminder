@@ -18,7 +18,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WordsReminder"
         tools:ignore="AllowBackup">
-
         <activity
             android:name=".activities.MainActivity"
             android:exported="true"
@@ -35,7 +34,5 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-
     </application>
-
 </manifest>

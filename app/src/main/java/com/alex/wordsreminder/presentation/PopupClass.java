@@ -8,20 +8,31 @@ import android.os.Bundle;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
 
 import com.alex.wordsreminder.R;
 import com.alex.wordsreminder.adapters.PracticeAdapter;
@@ -33,6 +44,7 @@ import com.alex.wordsreminder.models.ExampleModel;
 import com.alex.wordsreminder.models.SynonymModel;
 import com.alex.wordsreminder.models.WordModel;
 import com.alex.wordsreminder.utils.DbHelper;
+import com.alex.wordsreminder.view_models.TranslateViewModel;
 import com.google.mlkit.nl.languageid.LanguageIdentification;
 import com.google.mlkit.nl.languageid.LanguageIdentifier;
 
@@ -40,27 +52,34 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 public class PopupClass {
+    private static final String TAG = "PopUpRec";
+    final TranslateViewModel viewModel;
+    private final Context context;
+    private final DbHelper dbHelper;
     protected ImageButton ibtnDelTranslation, ibtnDelWord, ibtnGoogle, ibtnClosePopup;
     protected Button btnSave, btnDelete;
     protected View viewPopup;
     protected EditText etWord, etTranslation;
-
+    TextView tvTranslator;
     private WordsFragment callerFragment = null;
     private String idWord = "-1";
     private int position;
     private WordModel wordModel;
     private PopupWindow popupWindow;
-    private final Context context;
-    private final DbHelper dbHelper;
     private SpeechRecognizer speechRecWord, speechRecTranslation;
     private ImageButton micBtnWord, micBtnTranslation;
-    private static final String TAG = "PopUpRec";
-    TextView language, input;
+    private Spinner sourceLangSelector;
+    private Spinner targetLangSelector;
+    private ArrayAdapter<TranslateViewModel.Language> adapter;
 
     public PopupClass(Context context) {
         this.context = context;
         dbHelper = DbHelper.getInstance(context);
+        viewModel =
+                new ViewModelProvider((ViewModelStoreOwner) context).get(TranslateViewModel.class);
     }
+
+
 
 
     @SuppressLint("ClickableViewAccessibility")
@@ -74,11 +93,26 @@ public class PopupClass {
 
 
         // create the popup window
-            int width = Resources.getSystem().getDisplayMetrics().widthPixels - 64;
-        int height = (int)(Resources.getSystem().getDisplayMetrics().heightPixels /2);
+        int width = Resources.getSystem().getDisplayMetrics().widthPixels - 64;
+        int height = (int) (Resources.getSystem().getDisplayMetrics().heightPixels / 2);
         popupWindow = new PopupWindow(viewPopup, width, height, true);
 
-        popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);// show the popup window
+        popupWindow.showAtLocation(view, Gravity.TOP, 0, 128);// show the popup window
+
+        adapter = new ArrayAdapter<>(
+                context,
+                android.R.layout.simple_spinner_dropdown_item,
+                viewModel.getAvailableLanguages());
+
+        /*viewModel.translatedText.observe(
+                getViewLifecycleOwner(),
+                resultOrError -> {
+                    if (resultOrError.error != null) {
+                        tvTranslator.setError(resultOrError.error.getLocalizedMessage());
+                    } else {
+                        etTranslation.setText(resultOrError.result);
+                    }
+                });*/
 
         // which view you pass in doesn't matter, it is only used for the window token
         etWord = viewPopup.findViewById(R.id.newWordInput);
@@ -91,8 +125,57 @@ public class PopupClass {
         ibtnClosePopup = viewPopup.findViewById(R.id.btn_close_popup);
         ibtnGoogle = viewPopup.findViewById(R.id.imageButtonGoogleTranslator);
         btnDelete = viewPopup.findViewById(R.id.btn_del_word);
-        language = viewPopup.findViewById(R.id.tv_text_output);
-        input = viewPopup.findViewById(R.id.tv_last_input);
+        tvTranslator = viewPopup.findViewById(R.id.tv_translator);
+        sourceLangSelector = viewPopup.findViewById(R.id.sourceLangSelector);
+        targetLangSelector = viewPopup.findViewById(R.id.targetLangSelector);
+        sourceLangSelector.setAdapter(adapter);
+        targetLangSelector.setAdapter(adapter);
+        sourceLangSelector.setSelection(adapter.getPosition(new TranslateViewModel.Language("en")));
+        targetLangSelector.setSelection(adapter.getPosition(new TranslateViewModel.Language("uk")));
+        sourceLangSelector.setOnItemSelectedListener(
+                new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        //setProgressText(etTranslation);
+                        viewModel.sourceLang.setValue(adapter.getItem(position));
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+                        etTranslation.setText("");
+                    }
+                });
+        targetLangSelector.setOnItemSelectedListener(
+                new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        //setProgressText(etTranslation);
+                        viewModel.targetLang.setValue(adapter.getItem(position));
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+                        etTranslation.setText("");
+                    }
+                });
+
+        etWord.addTextChangedListener(
+                new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        setProgressText(tvTranslator);
+                        viewModel.sourceText.postValue(s.toString());
+                    }
+                });
+
         btnDelete.setVisibility(View.INVISIBLE);
         btnSave.setOnClickListener(v -> {
             onSavePopUpClick(v);
@@ -107,6 +190,7 @@ public class PopupClass {
             popupWindow.dismiss();
         });
         ibtnClosePopup.setOnClickListener(v -> popupWindow.dismiss());
+
 
         speechRecWord = SpeechRecognizer.createSpeechRecognizer(context);
         speechRecTranslation = SpeechRecognizer.createSpeechRecognizer(context);
@@ -154,9 +238,12 @@ public class PopupClass {
 
     }
 
+    private void setProgressText(TextView tv) {
+        tv.setText(context.getString(R.string.translate_progress));
+    }
 
     private void deleteWord() {
-        boolean isDeleted = dbHelper.delWordByID(idWord);
+        boolean isDeleted = dbHelper.deleteWordByID(idWord);
         if (isDeleted) {
             callerFragment.getAdapter().removeItem(position);
             Toast.makeText(context,
@@ -243,28 +330,44 @@ public class PopupClass {
 
 
     public void onButtonTranslateClick(View view) {
+        TranslateViewModel.Language language =
+                adapter.getItem(targetLangSelector.getSelectedItemPosition());
+        viewModel.downloadLanguage(language);
+        language =
+                adapter.getItem(sourceLangSelector.getSelectedItemPosition());
+        viewModel.downloadLanguage(language);
 
-        identifyLanguage( etWord.getText().toString().trim());
+        viewModel.translatedText.observe(
+                callerFragment.getViewLifecycleOwner(),
+                resultOrError -> {
+                    if (resultOrError.error != null) {
+                        tvTranslator.setError(resultOrError.error.getLocalizedMessage());
+                    } else {
+                        etTranslation.setText(resultOrError.result);
+                    }
+                });
+        identifyLanguage(etWord.getText().toString().trim());
+
         //Toast.makeText(view.getContext(), "This function is not available yet", Toast.LENGTH_SHORT).show();
     }
 
     private void identifyLanguage(final String inputText) {
 
         LanguageIdentifier languageIdentifier = LanguageIdentification.getClient();
-        language.setText(R.string.wait_message);
+        tvTranslator.setText(R.string.wait_message);
 
         languageIdentifier
                 .identifyLanguage(inputText)
                 .addOnSuccessListener(
                         identifiedLanguage -> {
-                            input.setText(context.getString(R.string.input, inputText));
-                            language.setText(context.getString(R.string.language, identifiedLanguage));
+                            //tvTranslator.setText(context.getString(R.string.input, inputText));
+                            tvTranslator.setText(context.getString(R.string.language, identifiedLanguage));
                         })
                 .addOnFailureListener(
                         e -> {
                             Log.e(TAG, "Language identification error", e);
-                            input.setText(context.getString(R.string.input, inputText));
-                            language.setText("");
+                            tvTranslator.setText(context.getString(R.string.input, inputText));
+                            //language.setText("");
                             Toast.makeText(
                                             context,
                                             context.getString(R.string.language_id_error)
@@ -276,6 +379,7 @@ public class PopupClass {
                                     .show();
                         });
     }
+
     public void changeMeaningPart(PracticeAdapter.MeaningPartAdapter adapter, ListView listView, ArrayList<BaseMeaning> list, int id,
                                   View view, String meaningPart) {
         LayoutInflater inflater = (LayoutInflater) view
@@ -450,7 +554,7 @@ public class PopupClass {
 
         @Override
         public void onError(int i) {
-            Log.d(TAG,  "error " +  i);
+            Log.d(TAG, "error " + i);
             Toast.makeText(editText.getContext(), R.string.try_again, Toast.LENGTH_SHORT).show();
         }
 

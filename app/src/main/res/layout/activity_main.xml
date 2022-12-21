@@ -115,7 +115,7 @@
         android:clickable="true"
         android:contentDescription="@string/add_new_word"
         android:focusable="true"
-        android:onClick="onButtonShowPopupWindowClick"
+        android:onClick="onAddNewWordClick"
         app:layout_constraintBottom_toTopOf="@+id/pager"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@android:drawable/ic_input_add"
