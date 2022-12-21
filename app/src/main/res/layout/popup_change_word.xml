@@ -28,6 +28,15 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.3" />
 
+    <Spinner
+        android:id="@+id/sourceLangSelector"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/newWordInput"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/newWordInput"
@@ -47,42 +56,50 @@
         android:id="@+id/ib_mic_translation"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginBottom="32dp"
         android:background="@color/colorTransparent"
         android:backgroundTint="#F9F8FA"
         android:contentDescription="@string/say_new_word"
         android:padding="0dp"
         android:scaleType="fitXY"
         android:src="@drawable/ic_mic_black_off"
+        app:layout_constraintBottom_toTopOf="@+id/buttonSave"
         app:layout_constraintEnd_toStartOf="@+id/newWordInput"
-        app:layout_constraintHorizontal_bias="0.4"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ib_mic_word" />
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
+    <Spinner
+        android:id="@+id/targetLangSelector"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+
+        app:layout_constraintBottom_toTopOf="@+id/translationInput"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
     <EditText
         android:id="@+id/translationInput"
         android:layout_width="182dp"
         android:layout_height="48dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginBottom="32dp"
         android:autofillHints="@string/translation"
         android:hint="@string/translation"
         android:inputType="textAutoCorrect"
+        app:layout_constraintBottom_toTopOf="@+id/buttonSave"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.4"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newWordInput" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/buttonSave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
         android:text="@string/save"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/translationInput" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageButton
         android:id="@+id/imageButtonDelWord"
@@ -103,21 +120,21 @@
         android:id="@+id/imageButtonDelTranslation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginBottom="32dp"
         android:background="@color/colorTransparent"
         android:contentDescription="@string/delete_text_translation"
         android:minWidth="48dp"
         android:minHeight="48dp"
         android:src="@drawable/delete_text_icon"
-        app:layout_constraintStart_toEndOf="@+id/translationInput"
-        app:layout_constraintTop_toBottomOf="@+id/imageButtonDelWord" />
+        app:layout_constraintBottom_toTopOf="@+id/buttonSave"
+        app:layout_constraintStart_toEndOf="@+id/translationInput" />
 
     <ImageButton
         android:id="@+id/imageButtonGoogleTranslator"
         android:layout_width="45dp"
         android:layout_height="42dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginBottom="24dp"
         android:background="@color/colorTransparent"
         android:contentDescription="@string/google_translation"
         android:scaleType="fitCenter"
@@ -125,8 +142,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.09"
-        app:layout_constraintStart_toEndOf="@+id/buttonSave"
-        app:layout_constraintTop_toBottomOf="@+id/imageButtonDelTranslation" />
+        app:layout_constraintStart_toEndOf="@+id/buttonSave" />
 
     <ImageButton
         android:id="@+id/btn_close_popup"
@@ -147,25 +163,20 @@
         android:text="@string/delete"
         app:layout_constraintBottom_toTopOf="@+id/newWordInput"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+
 
     <TextView
-        android:id="@+id/tv_text_output"
+        android:id="@+id/tv_translator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:text="TextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_del_word" />
-
-    <TextView
-        android:id="@+id/tv_last_input"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/newWordInput"
+        app:layout_constraintBottom_toTopOf="@+id/sourceLangSelector"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 

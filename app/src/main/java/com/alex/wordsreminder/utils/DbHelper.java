@@ -72,9 +72,9 @@ public class DbHelper extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, SCHEMA);
     }
 
-    public static DbHelper getInstance(Context ctx) {
+    public static DbHelper getInstance(Context context) {
         if (mInstance == null) {
-            mInstance = new DbHelper(ctx.getApplicationContext());
+            mInstance = new DbHelper(context.getApplicationContext());
         }
         return mInstance;
     }
@@ -176,14 +176,11 @@ public class DbHelper extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
         int right_answers = 0;
         String date = String.valueOf(Calendar.getInstance().getTime());
-
         contentValues.put(COLUMN_WORD, word);
         contentValues.put(DbHelper.COLUMN_TRANSLATION, translation);
         contentValues.put(DbHelper.COLUMN_DATE_CREATION, date);
         contentValues.put(DbHelper.COLUMN_RIGHT_ANSWERS_NUM, right_answers);
-
         long result = db.insert(TBL_WORDS, null, contentValues);
-
         //if date as inserted incorrectly it will return -1
         return (int) result;
     }
@@ -196,6 +193,13 @@ public class DbHelper extends SQLiteOpenHelper {
         contentValues.put(COLUMN_DATE_CREATION, word.getDateCreation());
         contentValues.put(COLUMN_RIGHT_ANSWERS_NUM, word.getRightAnswers());
         long result = db.update(TBL_WORDS, contentValues, "_id = ?", new String[]{word.getId()});
+        return result != -1;
+    }
+    public boolean deleteWordByID(String idWord) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String whereClause = "_id=?";
+        String[] whereArgs = new String[]{idWord};
+        long result = db.delete(TBL_WORDS, whereClause, whereArgs);
         return result != -1;
     }
 
@@ -372,13 +376,7 @@ public class DbHelper extends SQLiteOpenHelper {
         return result != -1;
     }
 
-    public boolean delWordByID(String idWord) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        String whereClause = "_id=?";
-        String[] whereArgs = new String[]{idWord};
-        long result = db.delete(TBL_WORDS, whereClause, whereArgs);
-        return result != -1;
-    }
+
 
     public boolean delAnswersByWordID(String idWord) {
         SQLiteDatabase db = this.getWritableDatabase();
