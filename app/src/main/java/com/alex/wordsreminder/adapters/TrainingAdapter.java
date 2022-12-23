@@ -58,20 +58,19 @@ public class TrainingAdapter extends RecyclerView.Adapter<TrainingAdapter.Traini
     @Override
     public void onBindViewHolder(TrainingViewHolder holder,
                                  @SuppressLint("RecyclerView") int position) {
-
         WordModel word = words.get(position);
         holder.word_training.setText(word.getWord());
 
-        String word_id = word.getId();
-        boolean answeredFor5Hours = answerDataService.isAnsweredFor5Hours(answers, word_id);
+        String wordId = word.getId();
+        boolean answeredFor5Hours = answerDataService.isAnsweredFor5Hours(answers, wordId);
 
         if (answeredFor5Hours) {
-            boolean ans_was_right = ifLastAnswerWasRight(word_id);
-            String last_answer_str = answerDataService.lastAnswerRes(answers, word_id);
-            holder.translation_answer.setText(last_answer_str);
+            boolean ansWasRight = ifLastAnswerWasRight(wordId);
+            String lastAnswerRes = answerDataService.lastAnswerRes(answers, wordId);
+            holder.translation_answer.setText(lastAnswerRes);
             holder.translation_answer.setKeyListener(null);
             holder.i_btn_check_answer.setEnabled(false);
-            if (ans_was_right) {
+            if (ansWasRight) {
                 holder.i_btn_check_answer.setImageResource(R.drawable.ic_correct);
 
             } else {
