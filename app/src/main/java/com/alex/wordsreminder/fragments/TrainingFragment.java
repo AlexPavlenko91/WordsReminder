@@ -27,7 +27,6 @@ import java.util.ArrayList;
 public class TrainingFragment extends Fragment {
 
     private static ArrayList<AnswerModel> answers;
-    protected UserModel currentUser = UserModel.newInstance();
     protected TrainingAdapter trainingAdapter;
     protected FloatingActionButton fab;
     ProgressBar progressBarDailyGoal;
@@ -36,20 +35,15 @@ public class TrainingFragment extends Fragment {
     private ArrayList<WordModel> words = new ArrayList<>();
 
     public TrainingFragment() {
-        // Required empty public constructor
     }
 
     public static TrainingFragment newInstance(String param1, String param2) {
-
         return new TrainingFragment();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       /* if (getArguments() != null) {
-            currentUser = getArguments().getParcelable("user");
-        }*/
         answerDataService = new AnswerDataService(requireContext());
         setHasOptionsMenu(true);
     }
@@ -65,42 +59,18 @@ public class TrainingFragment extends Fragment {
         tvActiveDays = requireActivity().findViewById(R.id.tv_active_days);
 
         RecyclerView recyclerView = view.findViewById(R.id.training_list);
-
         TrainingAdapter.TrainingClickListener stateClickListener =
                 (word, position) -> Toast.makeText(getContext(), position + " Position was selected" +
                         word.getWord(), Toast.LENGTH_SHORT).show();
         TrainingAdapter.CheckAnswerListener checkAnswerClickListener =
                 (word, position, current_str, user, answer, is_right) -> {
                     answerDataService.onCheckAnsClick(word, current_str, tvDailyProgress, tvActiveDays, progressBarDailyGoal);
-                    /*String user_id = currentUser.getId();
-                    int dailyLoad = currentUser.getDaily_load();
-
-                    Date date = new Date();
-                    AnswerModel answerModel = new AnswerModel(
-                            "-1", user_id,
-                            word.getId(), date, current_str, String.valueOf(is_right)
-                    );
-
-                    DbHelper.getInstance(getContext()).addAnswerToDB(answerModel);
-                    int right_answers = word.getRightAnswers();
-                    right_answers += is_right;
-                    word.setRightAnswers(right_answers);
-                    DbHelper.getInstance(getContext()).updateWord(word);
-                    answers = DbHelper.getInstance(getContext()).getAllAnswers();
-                    int rightAns = AnswerDataService.countRightAnswers(answers);
-                    int dailyProgress = (int) (((float) rightAns / (float) dailyLoad * 100));
-
-                    progressBarDailyGoal.setProgress(dailyProgress);
-                    String tvDailyProgText = (rightAns) + "/" + dailyLoad;
-                    tvDailyProgress.setText(tvDailyProgText);*/
                 };
 
         trainingAdapter = new TrainingAdapter(
                 words, answers, stateClickListener,
                 checkAnswerClickListener, requireContext());
-        // устанавливаем для списка адаптер
         recyclerView.setAdapter(trainingAdapter);
-
         fab = (requireActivity()).findViewById(R.id.floatingAddButton);
         fab.setVisibility(View.INVISIBLE);
         return view;
@@ -114,7 +84,6 @@ public class TrainingFragment extends Fragment {
     private void setInitialData() {
         words = DbHelper.getInstance(getContext()).getAllWords();
         answers = DbHelper.getInstance(getContext()).getAllAnswers();
-
         SharedPreferences sharedPref = requireActivity().getPreferences(Context.MODE_PRIVATE);
         String wordsSelection = sharedPref.getString("WORDS_SELECTION", "all_words");
         if (wordsSelection.equals("being_studied_words")) {

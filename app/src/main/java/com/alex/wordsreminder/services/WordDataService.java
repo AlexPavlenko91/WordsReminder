@@ -7,9 +7,7 @@ import java.util.ArrayList;
 public class WordDataService {
 
     public WordDataService() {
-
     }
-
 
     public WordModel leastLearnedWord(ArrayList<WordModel> words) {
         WordModel word = new WordModel();
@@ -23,5 +21,4 @@ public class WordDataService {
         }
         return word;
     }
-
 }
