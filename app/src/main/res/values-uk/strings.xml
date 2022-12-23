@@ -33,7 +33,7 @@
     <string name="delete_text_word">Видалити текст</string>
     <string name="delete_text_translation">delete text translation</string>
     <string name="google_translation">google translation</string>
-    <string name="learning_language">Мова яку ви вивчаєте</string>
+    <string name="learning_language">Мова що вивчається</string>
     <string name="main_language">Основна мова</string>
     <string name="select_daily_load">Щоденне навантаження</string>
     <string name="wrong_answer">Неправильна відповідь</string>

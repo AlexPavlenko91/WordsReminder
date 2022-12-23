@@ -79,9 +79,6 @@ public class PopupClass {
                 new ViewModelProvider((ViewModelStoreOwner) context).get(TranslateViewModel.class);
     }
 
-
-
-
     @SuppressLint("ClickableViewAccessibility")
     public void showPopupWindow(final View view, WordsFragment callerFragment) {
 
@@ -90,29 +87,16 @@ public class PopupClass {
                 .getContext()
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         viewPopup = inflater.inflate(R.layout.popup_change_word, (ViewGroup) view.getParent(), false);
-
-
         // create the popup window
         int width = Resources.getSystem().getDisplayMetrics().widthPixels - 64;
         int height = (int) (Resources.getSystem().getDisplayMetrics().heightPixels / 2);
         popupWindow = new PopupWindow(viewPopup, width, height, true);
-
         popupWindow.showAtLocation(view, Gravity.TOP, 0, 128);// show the popup window
 
         adapter = new ArrayAdapter<>(
                 context,
                 android.R.layout.simple_spinner_dropdown_item,
                 viewModel.getAvailableLanguages());
-
-        /*viewModel.translatedText.observe(
-                getViewLifecycleOwner(),
-                resultOrError -> {
-                    if (resultOrError.error != null) {
-                        tvTranslator.setError(resultOrError.error.getLocalizedMessage());
-                    } else {
-                        etTranslation.setText(resultOrError.result);
-                    }
-                });*/
 
         // which view you pass in doesn't matter, it is only used for the window token
         etWord = viewPopup.findViewById(R.id.newWordInput);
@@ -190,15 +174,11 @@ public class PopupClass {
             popupWindow.dismiss();
         });
         ibtnClosePopup.setOnClickListener(v -> popupWindow.dismiss());
-
-
         speechRecWord = SpeechRecognizer.createSpeechRecognizer(context);
         speechRecTranslation = SpeechRecognizer.createSpeechRecognizer(context);
-
         final Intent speechRecognizerIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
         speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
-
         speechRecWord.setRecognitionListener(new MySpeechListener(etWord));
         micBtnWord.setOnTouchListener((v, event) -> {
             switch (event.getAction()) {
@@ -347,8 +327,6 @@ public class PopupClass {
                     }
                 });
         identifyLanguage(etWord.getText().toString().trim());
-
-        //Toast.makeText(view.getContext(), "This function is not available yet", Toast.LENGTH_SHORT).show();
     }
 
     private void identifyLanguage(final String inputText) {
@@ -360,7 +338,6 @@ public class PopupClass {
                 .identifyLanguage(inputText)
                 .addOnSuccessListener(
                         identifiedLanguage -> {
-                            //tvTranslator.setText(context.getString(R.string.input, inputText));
                             tvTranslator.setText(context.getString(R.string.language, identifiedLanguage));
                         })
                 .addOnFailureListener(

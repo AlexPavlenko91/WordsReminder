@@ -54,7 +54,6 @@ public class RequestSingleton {
     public <T> void addToRequestQueue(Request<T> req) {
         getRequestQueue().add(req);
     }
-
     public ImageLoader getImageLoader() {
         return imageLoader;
     }

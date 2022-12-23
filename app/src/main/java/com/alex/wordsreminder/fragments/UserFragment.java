@@ -57,15 +57,12 @@ public class UserFragment extends Fragment {
 
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
         }
-
         public void onTextChanged(CharSequence s, int start, int before,
                                   int count) {
         }
     };
-    private ArrayList<AnswerModel> answers = new ArrayList<>();
     private TimePicker notificationTimePicker;
     private PendingIntent pendingIntent;
-    private AlarmManager alarmManager;
     private ProgressBar progressBarDailyGoal;
     private TextView tvDailyProgress;
     private ToggleButton toggleButtonNotifications;
@@ -73,10 +70,7 @@ public class UserFragment extends Fragment {
     private UserModel currentUser = UserModel.newInstance();
 
 
-    public UserFragment() {
-        // Required empty public constructor
-    }
-
+    public UserFragment() {}
 
     public static UserFragment newInstance() {
         return new UserFragment();
@@ -86,29 +80,22 @@ public class UserFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         setInitialData();
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        //setInitialData();
         View myView = inflater.inflate(R.layout.fragment_user, container, false);
         fab = requireActivity().findViewById(R.id.floatingAddButton);
         fab.setVisibility(View.INVISIBLE);
-
         progressBarDailyGoal = requireActivity().findViewById(R.id.progress_bar_daily_goal);
         tvDailyProgress = requireActivity().findViewById(R.id.tv_daily_goal);
-
         btnSave = myView.findViewById(R.id.save_profile_changes);
         btnSave.setOnClickListener(this::onSaveClick);
-
         etName = myView.findViewById(R.id.editTextPersonName);
         etName.addTextChangedListener(textWatcher);
-
         etEmail = myView.findViewById(R.id.editTextEmailAddress);
         etEmail.addTextChangedListener(textWatcher);
-
         spinInterfaceLang = myView.findViewById(R.id.spinner_interface_language);
         spinLearningLang = myView.findViewById(R.id.spinner_learning_language);
         spinMainLang = myView.findViewById(R.id.spinner_main_language);
@@ -127,7 +114,7 @@ public class UserFragment extends Fragment {
     private void setInitialData() {
         users = DbHelper.getInstance(requireActivity()).getAllUsers();
         if (users.size() > 0) {
-            currentUser = users.get(users.size() - 1); //TODO переробити через поле is_current
+            currentUser = users.get(users.size() - 1);
         }
     }
 
@@ -183,10 +170,8 @@ public class UserFragment extends Fragment {
 
                     } else btnSave.setVisibility(View.INVISIBLE);
                 }
-
                 @Override
                 public void onNothingSelected(AdapterView<?> parentView) {
-                    // your code here
                     btnSave.setVisibility(View.INVISIBLE);
                 }
 
@@ -200,10 +185,8 @@ public class UserFragment extends Fragment {
                         btnSave.setVisibility(View.VISIBLE);
                     }
                 }
-
                 @Override
                 public void onNothingSelected(AdapterView<?> parentView) {
-                    // your code here
                     btnSave.setVisibility(View.INVISIBLE);
                 }
 
@@ -217,13 +200,11 @@ public class UserFragment extends Fragment {
                         btnSave.setVisibility(View.VISIBLE);
                     }
                 }
-
                 @Override
                 public void onNothingSelected(AdapterView<?> parentView) {
                     // your code here
                     btnSave.setVisibility(View.INVISIBLE);
                 }
-
             });
             spinDailyLoad.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
@@ -234,7 +215,6 @@ public class UserFragment extends Fragment {
                         btnSave.setVisibility(View.VISIBLE);
                     }
                 }
-
                 @Override
                 public void onNothingSelected(AdapterView<?> parentView) {
                     // your code here
@@ -246,7 +226,6 @@ public class UserFragment extends Fragment {
         //save_btn.setVisibility(View.INVISIBLE);
         super.onResume();
     }
-
 
     public void setLocale(String langInterface) {
         String languageCode = "en";
@@ -337,11 +316,10 @@ public class UserFragment extends Fragment {
     }
 
     public void updateAppBar() {
-        answers = DbHelper.getInstance(getContext()).getAllAnswers();
+        ArrayList<AnswerModel> answers = DbHelper.getInstance(getContext()).getAllAnswers();
         int rightAns = AnswerDataService.rightAnsForToday(answers);
         int dailyLoad = currentUser.getDaily_load();
         int dailyProgress = (int) (((float) rightAns / (float) dailyLoad) * 100);
-
         progressBarDailyGoal.setProgress(dailyProgress);
         String tvDailyProgText = rightAns + "/" + dailyLoad;
         tvDailyProgress.setText(tvDailyProgText);
@@ -351,7 +329,7 @@ public class UserFragment extends Fragment {
     }
 
     public void setNotifications() {
-        alarmManager = (AlarmManager) requireActivity().getSystemService(ALARM_SERVICE);
+        AlarmManager alarmManager = (AlarmManager) requireActivity().getSystemService(ALARM_SERVICE);
         long time;
         Intent intent = new Intent(requireActivity(), NotificationReceiver.class);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
@@ -366,14 +344,12 @@ public class UserFragment extends Fragment {
             calendar.set(Calendar.HOUR, hour);
             calendar.set(Calendar.MINUTE, minute);
             time = calendar.getTimeInMillis();
-
             Toast.makeText(requireActivity(), "NOTIFICATIONS ON", Toast.LENGTH_SHORT).show();
             alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, time, AlarmManager.INTERVAL_DAY, pendingIntent);
         } else {
             alarmManager.cancel(pendingIntent);
             notificationsTime = "OFF";
             Toast.makeText(requireActivity(), "NOTIFICATIONS OFF", Toast.LENGTH_SHORT).show();
-
         }
     }
 
@@ -385,7 +361,6 @@ public class UserFragment extends Fragment {
     }
 
     public void onToggleClicked(View view) {
-
         setNotifications();
         if (!currentUser.getNotificationsTime().equals(notificationsTime)) {
             btnSave.setVisibility(View.VISIBLE);
