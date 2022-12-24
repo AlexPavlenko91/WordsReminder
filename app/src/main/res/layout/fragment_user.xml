@@ -107,7 +107,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="68dp"
-            android:background="@android:drawable/btn_dropdown"
+            android:entries="@array/interface_lang_arr"
             android:spinnerMode="dropdown"
             android:tooltipText="@string/select_interface_language"
             app:layout_constraintStart_toStartOf="parent"
@@ -139,7 +139,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="68dp"
-            android:background="@android:drawable/btn_dropdown"
             android:spinnerMode="dropdown"
             android:tooltipText="@string/select_interface_language"
             app:layout_constraintStart_toStartOf="parent"
@@ -162,7 +161,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="68dp"
-            android:background="@android:drawable/btn_dropdown"
             android:spinnerMode="dropdown"
             android:tooltipText="@string/select_interface_language"
             app:layout_constraintStart_toStartOf="parent"
@@ -194,13 +192,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="68dp"
-            android:background="@android:drawable/btn_dropdown"
             android:dropDownWidth="60dp"
             android:spinnerMode="dropdown"
             android:tooltipText="@string/select_daily_load"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_daily_load"
-            tools:targetApi="o" />
+             />
 
         <TextView
             android:id="@+id/tv_select_notification_time"

@@ -155,7 +155,7 @@ public class PopupClass {
 
                     @Override
                     public void afterTextChanged(Editable s) {
-                        setProgressText(tvTranslator);
+                        //setProgressText(tvTranslator);
                         viewModel.sourceText.postValue(s.toString());
                     }
                 });
@@ -226,8 +226,6 @@ public class PopupClass {
         boolean isDeleted = dbHelper.deleteWordByID(idWord);
         if (isDeleted) {
             callerFragment.getAdapter().removeItem(position);
-            Toast.makeText(context,
-                    "Data Successfully deleted!", Toast.LENGTH_LONG).show();
         } else {
             Toast.makeText(context, "Something went wrong :(.", Toast.LENGTH_LONG).show();
         }
@@ -301,8 +299,6 @@ public class PopupClass {
         if (isInserted != -1) {
             WordModel wordModel = dbHelper.wordByID(String.valueOf(isInserted));
             callerFragment.getAdapter().addItem(wordModel);
-            Toast.makeText(context,
-                    "Data Successfully Inserted!", Toast.LENGTH_LONG).show();
         } else {
             Toast.makeText(context, "Something went wrong :(.", Toast.LENGTH_LONG).show();
         }
