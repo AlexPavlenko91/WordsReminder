@@ -121,19 +121,19 @@ public class UserFragment extends Fragment {
     @Override
     public void onResume() {
         ArrayAdapter<CharSequence> adapterInterfaceLang = ArrayAdapter.createFromResource(requireActivity(),
-                R.array.interface_lang_arr, android.R.layout.simple_spinner_dropdown_item);
+                R.array.interface_lang_arr, android.R.layout.simple_spinner_item);
         spinInterfaceLang.setAdapter(adapterInterfaceLang);
 
         ArrayAdapter<CharSequence> adapterMainLang = ArrayAdapter.createFromResource(requireActivity(),
-                R.array.learn_main_lang_arr, android.R.layout.simple_spinner_dropdown_item);
+                R.array.learn_main_lang_arr, android.R.layout.simple_spinner_item);
         spinMainLang.setAdapter(adapterMainLang);
 
         ArrayAdapter<CharSequence> adapterLearnLang = ArrayAdapter.createFromResource(requireActivity(),
-                R.array.learn_main_lang_arr, android.R.layout.simple_spinner_dropdown_item);
+                R.array.learn_main_lang_arr, android.R.layout.simple_spinner_item);
         spinLearningLang.setAdapter(adapterLearnLang);
 
         ArrayAdapter<CharSequence> adapterDailyLoad = ArrayAdapter.createFromResource(requireActivity(),
-                R.array.daily_load_arr, android.R.layout.simple_spinner_dropdown_item);
+                R.array.daily_load_arr, android.R.layout.simple_spinner_item);
         spinDailyLoad.setAdapter(adapterDailyLoad);
 
 
@@ -344,12 +344,12 @@ public class UserFragment extends Fragment {
             calendar.set(Calendar.HOUR, hour);
             calendar.set(Calendar.MINUTE, minute);
             time = calendar.getTimeInMillis();
-            //Toast.makeText(requireActivity(), "NOTIFICATIONS ON", Toast.LENGTH_SHORT).show();
-            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time, AlarmManager.INTERVAL_DAY, pendingIntent);
+            Toast.makeText(requireActivity(), "NOTIFICATIONS ON", Toast.LENGTH_SHORT).show();
+            alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, time, AlarmManager.INTERVAL_DAY, pendingIntent);
         } else {
             alarmManager.cancel(pendingIntent);
             notificationsTime = "OFF";
-            //Toast.makeText(requireActivity(), "NOTIFICATIONS OFF", Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireActivity(), "NOTIFICATIONS OFF", Toast.LENGTH_SHORT).show();
         }
     }
 
