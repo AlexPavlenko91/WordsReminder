@@ -15,7 +15,6 @@ import androidx.core.app.NotificationCompat;
 
 import com.alex.wordsreminder.R;
 import com.alex.wordsreminder.activities.MainActivity;
-import com.alex.wordsreminder.services.WordDataService;
 
 public class NotificationReceiver extends BroadcastReceiver {
 
@@ -23,11 +22,8 @@ public class NotificationReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
 
         Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        WordDataService wordDataService = new WordDataService(context);
-        String title = "You've asked to remind you";
-        String body = wordDataService.leastLearnedWord().getWord()
-                + " = "
-                + wordDataService.leastLearnedWord().getTranslation();
+        String title = "Words Reminder";
+        String body = "You asked to remind you about learning";
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         String NOTIFICATION_CHANNEL_ID = "channel_id_01";
         NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, "My_Notifications", NotificationManager.IMPORTANCE_HIGH);

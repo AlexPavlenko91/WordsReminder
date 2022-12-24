@@ -98,7 +98,7 @@ public class PracticeFragment extends Fragment {
         dictionaryDataService = new DictionaryDataService(requireContext());
         dbHelper = DbHelper.getInstance(requireContext());
         words = dbHelper.getAllWords();
-        wordDataService = new WordDataService(requireContext());
+        wordDataService = new WordDataService();
         currentWord = wordDataService.leastLearnedWord(words);
     }
 
